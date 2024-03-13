@@ -1,0 +1,33 @@
+jQuery(function ($) {
+    
+    $('.main-menu').on('click', function() {
+        // Check if the main menu has the class 'expanded'
+        updateMobileMenuHeight();
+        if ($(this).hasClass('expanded')) {
+            // Add 'no-scroll' class to the body
+            $('body').addClass('no-scroll');
+        } else {
+            // Remove 'no-scroll' class from the body
+            $('body').removeClass('no-scroll');
+        }
+    });    
+    
+
+    // Function to update the height of the div based on the screen size
+    function updateMobileMenuHeight() {
+        var screenHeight = $(window).height(); 
+        var topbar_height = $('.top-bar').outerHeight();
+        var main_header_height = $('.main-header').outerHeight();
+        var newDivHeight = screenHeight - (main_header_height + topbar_height); 
+        var newDivHeightSticky = screenHeight - main_header_height;
+        $('.main-header:not(.fusion-sticky-transition)  .fusion-menu').css('max-height', newDivHeight + 'px');
+        $('.main-header.fusion-sticky-transition .fusion-menu').css('max-height', newDivHeightSticky + 'px');
+    }
+    
+    // Initial call to set the height on page load
+    updateMobileMenuHeight();
+    
+    // Call the function whenever the window is resized
+    $(window).resize(function() {
+        updateMobileMenuHeight();
+    });
